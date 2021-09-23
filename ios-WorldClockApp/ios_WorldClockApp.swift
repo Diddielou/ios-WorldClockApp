@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct ios_WorldClockAppApp: App {
+struct ios_WorldClockApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
