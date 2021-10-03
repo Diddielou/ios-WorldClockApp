@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE48496526FCB6B30092DDC3 /* ios_WorldClockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48496426FCB6B30092DDC3 /* ios_WorldClockApp.swift */; };
-		CE48496726FCB6B30092DDC3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48496626FCB6B30092DDC3 /* ContentView.swift */; };
+		5AF4615827098FCC00F18A22 /* WorldClockAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF4615727098FCC00F18A22 /* WorldClockAppViewModel.swift */; };
+		5AF4615A27098FFA00F18A22 /* WorldClockAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF4615927098FFA00F18A22 /* WorldClockAppModel.swift */; };
+		CE48496526FCB6B30092DDC3 /* WorldClockApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48496426FCB6B30092DDC3 /* WorldClockApp.swift */; };
+		CE48496726FCB6B30092DDC3 /* WorldClockAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */; };
 		CE48496926FCB6B50092DDC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE48496826FCB6B50092DDC3 /* Assets.xcassets */; };
 		CE48496C26FCB6B50092DDC3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE48496B26FCB6B50092DDC3 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5AF4615727098FCC00F18A22 /* WorldClockAppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockAppViewModel.swift; sourceTree = "<group>"; };
+		5AF4615927098FFA00F18A22 /* WorldClockAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockAppModel.swift; sourceTree = "<group>"; };
 		CE48496126FCB6B30092DDC3 /* ios-WorldClockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-WorldClockApp.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CE48496426FCB6B30092DDC3 /* ios_WorldClockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_WorldClockApp.swift; sourceTree = "<group>"; };
-		CE48496626FCB6B30092DDC3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CE48496426FCB6B30092DDC3 /* WorldClockApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockApp.swift; sourceTree = "<group>"; };
+		CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockAppView.swift; sourceTree = "<group>"; };
 		CE48496826FCB6B50092DDC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE48496B26FCB6B50092DDC3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,8 +55,10 @@
 		CE48496326FCB6B30092DDC3 /* ios-WorldClockApp */ = {
 			isa = PBXGroup;
 			children = (
-				CE48496426FCB6B30092DDC3 /* ios_WorldClockApp.swift */,
-				CE48496626FCB6B30092DDC3 /* ContentView.swift */,
+				5AF4615727098FCC00F18A22 /* WorldClockAppViewModel.swift */,
+				5AF4615927098FFA00F18A22 /* WorldClockAppModel.swift */,
+				CE48496426FCB6B30092DDC3 /* WorldClockApp.swift */,
+				CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */,
 				CE48496826FCB6B50092DDC3 /* Assets.xcassets */,
 				CE48496A26FCB6B50092DDC3 /* Preview Content */,
 			);
@@ -137,8 +143,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE48496726FCB6B30092DDC3 /* ContentView.swift in Sources */,
-				CE48496526FCB6B30092DDC3 /* ios_WorldClockApp.swift in Sources */,
+				5AF4615827098FCC00F18A22 /* WorldClockAppViewModel.swift in Sources */,
+				5AF4615A27098FFA00F18A22 /* WorldClockAppModel.swift in Sources */,
+				CE48496726FCB6B30092DDC3 /* WorldClockAppView.swift in Sources */,
+				CE48496526FCB6B30092DDC3 /* WorldClockApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
