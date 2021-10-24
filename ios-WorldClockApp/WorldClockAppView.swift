@@ -2,12 +2,9 @@ import SwiftUI
 
 // TODO: enum wird momentan nicht gebraucht (können nicht auf Variablen zugreifen). Definition von enum falsch? Wie sollte man enum brauchen? -> inkl. letzter Punkt A2: width, height, color in einem Parameter?
 
-// TODO: A3: All hands: calculate angles based on time and get from view model.
 // TODO: A4: Skalierbarkeit einer View: Clockface-Size ist manuell definiert, ohne frame ist es nicht mehr Screen > wieso?
 
-
 let screenSize: CGRect = UIScreen.main.bounds
-
 
 // MARK: Hands (Zeiger)
 public enum Hands { // case: height, case: width, case: color
@@ -23,7 +20,7 @@ struct WorldClockAppView: View {
     
     var body: some View {
         
-        let angleArray = viewModel.getAngles()
+        var angleArray = viewModel.getAngles()
         let animation = Animation.linear(duration: 0.01)
         
         // Test
@@ -39,40 +36,26 @@ struct WorldClockAppView: View {
                 
                 Hand(length: 50) // HourHand
                     .stroke(Color.primary, lineWidth: 6)
-                    //.onReceive(viewModel.timer) { angle in //
                         .rotationEffect(Angle.degrees(angleArray[0]))
-                    //})
                 
                 Hand(length: 25) // MinuteHand
                     .stroke(Color.primary, lineWidth: 3)
-                    //.onReceive(viewModel.timer) { angle in
                         .rotationEffect(Angle.degrees(angleArray[1]))
-                    //})
                 
                 Hand(length: 25) // SecondHand
                     .stroke(Color.red, lineWidth: 2)
-                    //.onReceive(viewModel.timer) { angle in
                         .rotationEffect(Angle.degrees(angleArray[2]))
-                    //})
-                
-                
             }
             // TODO: adjust clock size here, must not be manual
             //.frame(width: width, height: height)
-        
             .frame(width: screenSize.width*40/100, height: screenSize.height*40/100)
         
-        /*
-            .onReceive(viewModel.timer) { (time) in
-                withAnimation(Animation.linear(duration: 0.01)) { }
-                    // TODO: what to do here?
-                    .rotationEffect(Angle.degrees(angleArray[0]))
-                    .rotationEffect(Angle.degrees(angleArray[1]))
-                    .rotationEffect(Angle.degrees(angleArray[2]))
+            .onReceive(viewModel.timer) { (_) in
+                viewModel.updateModel()
+                withAnimation(animation){
+                    angleArray = viewModel.getAngles()
+                }
             }
-         
-         */
-        //}
     
         }
     
@@ -80,21 +63,6 @@ struct WorldClockAppView: View {
     
     
     }
-
-/*
- struct CurrentDateView : View {
-     @State var newDate = Date() // unsere Time
-
-     let timer = Timer.publish(every: 1, on: .current, in: .common).autoconnect() // times im ViewModel
-
-     var body: some View {
-         Text("\(newDate)")
-             .onReceive(timer) { // wenn Timer geändert wird
-                 self.newDate = Date() // sollen Zeiger sich bewegen
-             }
-     }
- }
- */
 
 
 /** Anfang von allen Zeigern muss realtiv zu Clockface positioniert werden, damit alle Zeiger im Zentrum von Clockface starten. **/
@@ -114,7 +82,6 @@ extension CGRect {
 }
 
 struct Hand: Shape {
-    
     
     var length: CGFloat
     

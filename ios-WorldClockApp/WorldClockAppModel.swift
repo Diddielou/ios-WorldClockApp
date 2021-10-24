@@ -30,9 +30,6 @@ struct WorldClockAppModel {
             minute = calendar.component(.minute, from: date)
             second = calendar.component(.second, from: date)
             
-        }
-        
-        func getTime(timeZoneName: String){
             
         }
         
@@ -53,38 +50,11 @@ struct WorldClockAppModel {
         
         
         var test = timeZoneZurich?.secondsFromGMT()
-        
-        
+
         
         // identifier für Stadt, beim Erstellen der Liste wiederverwenden
         // Uhr selbst hat kein Ort: Time wird dann initialisiert mit der Zeit von London, TimeZone braucht man in dem Moment, wenn man die Uhr stellen will, --> Identifier
          */
-    
-
-
-/*
-
- 
- currentTime = Time(hour: 9, min: 50, sec: 30, location: "Zurich", timeZone: TimeZone.current)
- 
- 
- struct CurrentTime {
-     var seconds: TimeInterval = CurrentTime.currentSecond(date: Date())
-
-     private let timer = Timer.publish(every: 0.2, on: .main, in: .default).autoconnect()
-     private var store = Set<AnyCancellable>()
-
-     init() {
-         timer.map(Self.currentSecond).assign(to: \.seconds, on: self).store(in: &store)
-     }
- 
-     private static func currentSecond(date: Date) -> TimeInterval {
-         let components = Calendar.current.dateComponents([.year, .month, .day], from: date)
-         let referenceDate = Calendar.current.date(from: DateComponents(year: components.year!, month: components.month!, day: components.day!))!
-         return Date().timeIntervalSince(referenceDate)
-     }
- }
-*/
 
 /*
         [
@@ -531,4 +501,3 @@ struct WorldClockAppModel {
     
     */
 
-    
