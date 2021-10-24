@@ -9,13 +9,14 @@ import Foundation
 
 class WorldClockAppViewModel: ObservableObject {
     
+    // TODO: get timeZone from a... list, array, enum?
+    
     @Published private var model : WorldClockAppModel
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     init(){
         model = WorldClockAppViewModel.createModel()
-        print(model.currentTime)
     }
     
     static func createModel() -> WorldClockAppModel {
@@ -34,6 +35,7 @@ class WorldClockAppViewModel: ObservableObject {
         
         var output : Array<Double> = Array()
         
+        // TODO: fractionalHour is not perfect
         let fractionalHour = (currentHour.truncatingRemainder(dividingBy: 12)) + currentMinute / 60 + currentSecond / 3600
         let fractionalMinute = currentMinute + currentSecond / 60
         let fractionalSecond = currentSecond

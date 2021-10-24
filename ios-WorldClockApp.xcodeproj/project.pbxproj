@@ -13,6 +13,7 @@
 		CE48496726FCB6B30092DDC3 /* WorldClockAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */; };
 		CE48496926FCB6B50092DDC3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE48496826FCB6B50092DDC3 /* Assets.xcassets */; };
 		CE48496C26FCB6B50092DDC3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CE48496B26FCB6B50092DDC3 /* Preview Assets.xcassets */; };
+		CEFAFEB12725D86200D31EEA /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEFAFEB02725D86200D31EEA /* ClockView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorldClockAppView.swift; sourceTree = "<group>"; };
 		CE48496826FCB6B50092DDC3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CE48496B26FCB6B50092DDC3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CEFAFEB02725D86200D31EEA /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,10 +57,11 @@
 		CE48496326FCB6B30092DDC3 /* ios-WorldClockApp */ = {
 			isa = PBXGroup;
 			children = (
-				5AF4615727098FCC00F18A22 /* WorldClockAppViewModel.swift */,
-				5AF4615927098FFA00F18A22 /* WorldClockAppModel.swift */,
 				CE48496426FCB6B30092DDC3 /* WorldClockApp.swift */,
+				5AF4615927098FFA00F18A22 /* WorldClockAppModel.swift */,
+				5AF4615727098FCC00F18A22 /* WorldClockAppViewModel.swift */,
 				CE48496626FCB6B30092DDC3 /* WorldClockAppView.swift */,
+				CEFAFEB02725D86200D31EEA /* ClockView.swift */,
 				CE48496826FCB6B50092DDC3 /* Assets.xcassets */,
 				CE48496A26FCB6B50092DDC3 /* Preview Content */,
 			);
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AF4615827098FCC00F18A22 /* WorldClockAppViewModel.swift in Sources */,
+				CEFAFEB12725D86200D31EEA /* ClockView.swift in Sources */,
 				5AF4615A27098FFA00F18A22 /* WorldClockAppModel.swift in Sources */,
 				CE48496726FCB6B30092DDC3 /* WorldClockAppView.swift in Sources */,
 				CE48496526FCB6B30092DDC3 /* WorldClockApp.swift in Sources */,

@@ -30,7 +30,6 @@ struct WorldClockAppModel {
             minute = calendar.component(.minute, from: date)
             second = calendar.component(.second, from: date)
             
-            
         }
         
     }
