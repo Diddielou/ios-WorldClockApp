@@ -8,6 +8,7 @@ import SwiftUI
 
 let screenSize: CGRect = UIScreen.main.bounds
 
+
 // MARK: Hands (Zeiger)
 public enum Hands { // case: height, case: width, case: color
     // case hourHand(hourHand: Hand(length: 50))
@@ -16,30 +17,87 @@ public enum Hands { // case: height, case: width, case: color
     case secondHand(height: CGFloat, width: CGFloat, color: Color)
 }
 
-
 struct WorldClockAppView: View {
+    
+    @ObservedObject var viewModel: WorldClockAppViewModel
+    
     var body: some View {
+        
+        let angleArray = viewModel.getAngles()
+        let animation = Animation.linear(duration: 0.01)
+        
+        // Test
+        //let marginLeading: CGFloat = 0
+        //let marginTrailing: CGFloat = 100
+        
         // TODO: A3
-        // let time: TimeInterval = 30
-        ZStack {
-            ClockFace()
-            Hand(length: 50) // HourHand
-                .stroke(Color.primary, lineWidth: 6)
-                .rotationEffect(Angle.degrees(Double(30) * 360/60)) // !time
-            Hand(length: 25) // MinuteHand
-                .stroke(Color.primary, lineWidth: 3)
-                .rotationEffect(Angle.degrees(Double(20) * 360/60)) // !time
-            Hand(length: 25) // SecondHand
-                .stroke(Color.red, lineWidth: 2)
-                .rotationEffect(Angle.degrees(Double(10) * 360/60)) // !time
+        //GeometryReader { geometryReader in
+          //  let width = geometryReader.size.width * 0.85
+          //  let height = geometryReader.size.height / 2.5
+            ZStack {
+                ClockFace()
+                
+                Hand(length: 50) // HourHand
+                    .stroke(Color.primary, lineWidth: 6)
+                    //.onReceive(viewModel.timer) { angle in //
+                        .rotationEffect(Angle.degrees(angleArray[0]))
+                    //})
+                
+                Hand(length: 25) // MinuteHand
+                    .stroke(Color.primary, lineWidth: 3)
+                    //.onReceive(viewModel.timer) { angle in
+                        .rotationEffect(Angle.degrees(angleArray[1]))
+                    //})
+                
+                Hand(length: 25) // SecondHand
+                    .stroke(Color.red, lineWidth: 2)
+                    //.onReceive(viewModel.timer) { angle in
+                        .rotationEffect(Angle.degrees(angleArray[2]))
+                    //})
+                
+                
+            }
+            // TODO: adjust clock size here, must not be manual
+            //.frame(width: width, height: height)
+        
+            .frame(width: screenSize.width*40/100, height: screenSize.height*40/100)
+        
+        /*
+            .onReceive(viewModel.timer) { (time) in
+                withAnimation(Animation.linear(duration: 0.01)) { }
+                    // TODO: what to do here?
+                    .rotationEffect(Angle.degrees(angleArray[0]))
+                    .rotationEffect(Angle.degrees(angleArray[1]))
+                    .rotationEffect(Angle.degrees(angleArray[2]))
+            }
+         
+         */
+        //}
+    
         }
-        // TODO: adjust clock size here, must not be manual
-        .frame(width: screenSize.width*40/100, height: screenSize.height*40/100)
+    
+    
+    
+    
     }
-}
+
+/*
+ struct CurrentDateView : View {
+     @State var newDate = Date() // unsere Time
+
+     let timer = Timer.publish(every: 1, on: .current, in: .common).autoconnect() // times im ViewModel
+
+     var body: some View {
+         Text("\(newDate)")
+             .onReceive(timer) { // wenn Timer geändert wird
+                 self.newDate = Date() // sollen Zeiger sich bewegen
+             }
+     }
+ }
+ */
 
 
-/** Anfang von allen Zeiger muss realtiv zu Clockface positioniert werden, damit alle Zeiger im Zentrum von Clockface starten. **/
+/** Anfang von allen Zeigern muss realtiv zu Clockface positioniert werden, damit alle Zeiger im Zentrum von Clockface starten. **/
 extension CGRect {
     var center: CGPoint {
         CGPoint(x: midX, y: midY)
@@ -56,6 +114,8 @@ extension CGRect {
 }
 
 struct Hand: Shape {
+    
+    
     var length: CGFloat
     
     init(length: CGFloat){
@@ -75,6 +135,7 @@ struct Hand: Shape {
 
 // MARK: ClockFace: only ticks
 struct ClockFace: View {
+    
     
     /* // TODO: Skalierbarkeit mit GeometryReader?
     var body: some View {
@@ -129,7 +190,6 @@ struct ClockFace: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        WorldClockAppView()
- 
+        WorldClockAppView(viewModel: WorldClockAppViewModel())
     }
 }
