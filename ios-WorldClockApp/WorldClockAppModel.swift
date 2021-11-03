@@ -10,8 +10,7 @@ import Foundation
 struct WorldClockAppModel {
     
     // Variablen
-    //var timeZoneName : String
-    var currentTime : Time
+    var clocks : [Clock]
     
     struct Time {
         var hour: Int
@@ -29,18 +28,36 @@ struct WorldClockAppModel {
             hour = calendar.component(.hour, from: date)
             minute = calendar.component(.minute, from: date)
             second = calendar.component(.second, from: date)
-            
         }
-        
     }
     
+    /*
+     TODO: create Time list with times from different timezones
+    */
     
-    // different clocks (per Location) = Time
+    init(numberOfClocks: Int, clockContentFactory: (Int) -> String){
+        clocks = Array<Clock>()
+        for index in 0..<numberOfClocks {
+            let timeZone = clockContentFactory(index) // Timezones als Array, dann durchgehen
+            let time = Time(timeZoneName: timeZone)
+            
+            clocks.append(Clock(id: index, timeZone: timeZone, currentTime: time))
+        }
+    }
+   // timeZone : String){ // TODO: was machen wir hier, um 1 Model zu erstellen aber meherere Times? // struct with Clock
     
-    init(timeZone : String){
-        currentTime = Time(timeZoneName: timeZone)
+    
+    struct Clock : Identifiable {
+        var id: Int
+        var timeZone : String
+        var currentTime : Time
     }
 }
+
+    
+    
+    
+
         
         /*
         var timeZoneZurich = TimeZone(identifier: "Europe/Zurich")

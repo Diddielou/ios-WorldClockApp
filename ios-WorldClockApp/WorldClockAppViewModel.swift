@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class WorldClockAppViewModel: ObservableObject {
     
@@ -20,18 +21,23 @@ class WorldClockAppViewModel: ObservableObject {
     }
     
     static func createModel() -> WorldClockAppModel {
-        return WorldClockAppModel(timeZone: "Europe/Zurich")
+        // TODO: list cities in array oder so
+        let cities: Array<String> = ["Europe/Zurich", "Europe/London"]
+        return WorldClockAppModel(numberOfClocks: cities.count, clockContentFactory: {
+            index in
+            return cities[index]
+        })
     }
     
-    func updateModel() {
-        self.model = WorldClockAppModel(timeZone: "Europe/Zurich")
+    var clocks : [WorldClockAppModel.Clock] {
+        model.clocks
     }
     
-    func getAngles() -> Array<Double> {
-        // let angleOffset = -Double.pi / 2 // - pi/2 radians means 90 degrees
-        let currentHour = Double(model.currentTime.hour)
-        let currentMinute = Double(model.currentTime.minute)
-        let currentSecond = Double(model.currentTime.second)
+    func getAngles(currentClock : WorldClockAppModel.Clock) -> Array<Double> {
+        
+        let currentHour = Double(currentClock.currentTime.hour)
+        let currentMinute = Double(currentClock.currentTime.minute)
+        let currentSecond = Double(currentClock.currentTime.second)
         
         var output : Array<Double> = Array()
         
@@ -59,6 +65,5 @@ class WorldClockAppViewModel: ObservableObject {
         
         return output
     }
-    
     
 }

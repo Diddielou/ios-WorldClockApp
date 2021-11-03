@@ -19,25 +19,26 @@ public enum Hands { // case: height, case: width, case: color
 /** View for one clock **/
 struct ClockView : View {
     
-    //let screenSize: CGRect = UIScreen.main.bounds
-    @ObservedObject var viewModel: WorldClockAppViewModel
+    let screenSize: CGRect = UIScreen.main.bounds
+    @State var viewModel: WorldClockAppViewModel
     
-    init(){
-        viewModel = WorldClockAppViewModel()
+    init(viewModel : WorldClockAppViewModel){
+        self.viewModel = viewModel
     }
     
-    var body: some View {
-        GeometryReader { geometry in
-            self.body (for: geometry.size)
-        }
-    }
     
     @ViewBuilder
-    private func body(for size: CGSize) -> some View {
-        
-    var angleArray = viewModel.getAngles()
-    let animation = Animation.linear(duration: 0.01)
-        
+    var body: some View {
+     GeometryReader { geometry in
+    
+      let size = geometry.size // TODO: size replace
+      // TODO: refacoring
+      let minSize = min(geometry.size.width, geometry.size.height)/2-10 // .frame(width: screenSize.width, height: screenSize.height-50)
+     // minSize: radius: Hälfte von Width von Device
+      
+      var angleArray = self.viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: Array Loop implementeren
+      let animation = Animation.linear(duration: 0.01)
+    
     // TODO: Skalierbarkeit: einzelne Werte mit GeometryReader (for: size)?
         VStack { // To put in text
             ZStack {
@@ -46,8 +47,8 @@ struct ClockView : View {
                         // quarter hour
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 6, height: 25)
-                        Spacer()
+                            .frame(width: 6, height: 25) // TODO: frame // width: 6, height: 25)
+                            .offset(y: minSize-12) // TODO: richtige Sizes 25 länge von tick, durch 2 und noch ein bisschen mehr
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/4*360))
                 }
@@ -56,52 +57,55 @@ struct ClockView : View {
                         // each hour
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 5, height: 20)
-                        Spacer()
+                            .frame(width: 5, height: 20) // (width: 5, height: 20)
+                            .offset(y: minSize-10)
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/12*360))
                 }
                 ForEach(0..<60) { tick in
                     VStack {
-                        //
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 2, height: 15)
-                        Spacer()
+                            .frame(width: 2, height: 15) // width: 2, height: 15)
+                            .offset(y: minSize-8)
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/60*360))
                 }
                 Color.clear
                 
-                Hand(length: 50) // HourHand
-                    .stroke(Color.primary, lineWidth: 6)
+                Hand(length: minSize*1.4) // HourHand TODO: check
+                    .stroke(Color.primary, lineWidth: 6) // TODO: lineWidths
                     .rotationEffect(Angle.degrees(angleArray[0]))
                 
-                Hand(length: 25) // MinuteHand
+                Hand(length: minSize*1.2) // MinuteHand
                     .stroke(Color.primary, lineWidth: 3)
                     .rotationEffect(Angle.degrees(angleArray[1]))
                 
-                Hand(length: 25) // SecondHand
+                Hand(length: minSize*1.2) // SecondHand
                     .stroke(Color.red, lineWidth: 2)
                     .rotationEffect(Angle.degrees(angleArray[2]))
                     
-                
-                }.onReceive(viewModel.timer) { (_) in
-                    viewModel.updateModel()
+            }// Zstack end
+            .onReceive(viewModel.timer) { (_) in
+                    viewModel = WorldClockAppViewModel()
                     withAnimation(animation){
-                        angleArray = viewModel.getAngles()
+                        angleArray = viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: Automatize
                     }
-                
-            } // Zstack end
+            }
             
-            Spacer()
-            Text("Zurich")
+            //Spacer()
+            //Text("Zurich") // TODO: how to get text from viewModel?
                 .font(Font.system(size: fontSize(for: size)))
                 //.frame(width: size.width, height: size.height/8, alignment: .bottom)
                 // TODO: wieso ist frame so klein, obwohl ClockView-Child so viel Platz hätte? (siehe View)
-    }
+        } // end VStack
+            } // end Geometry
+              //.aspectRatio(1, contentMode: .fit)
+              //.frame(width: screenSize.width, height: screenSize.height-50)
+              
   } // end body
 } // end Clockview
+
 
 
 private func fontSize(for size: CGSize)->CGFloat{
@@ -126,12 +130,8 @@ extension CGRect {
 
 struct Hand: Shape {
     var length: CGFloat
-    
-    init(length: CGFloat){
-        self.length = length
-    }
-    
     var circleRadius: CGFloat = 3
+    
     func path(in rect: CGRect) -> Path { // single hand
         Path { p in
             p.move(to: CGPoint(x: rect.midX, y: rect.minY+length))
@@ -143,7 +143,7 @@ struct Hand: Shape {
 
 struct ClockView_Previews: PreviewProvider {
     static var previews: some View {
-            WorldClockAppView()
+            WorldClockAppView(viewModel: WorldClockAppViewModel())
         }
     }
 
