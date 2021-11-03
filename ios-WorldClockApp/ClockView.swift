@@ -19,12 +19,16 @@ public enum Hands { // case: height, case: width, case: color
 /** View for one clock **/
 struct ClockView : View {
     
+    
     let screenSize: CGRect = UIScreen.main.bounds
     @State var viewModel: WorldClockAppViewModel
+    //var indexOfClock: Int
     
-    init(viewModel : WorldClockAppViewModel){
+    init(viewModel : WorldClockAppViewModel){ // TODO: indexOfClock kommt rein und setzen
         self.viewModel = viewModel
     }
+    
+    
     
     
     @ViewBuilder
@@ -37,7 +41,7 @@ struct ClockView : View {
      // minSize: radius: Hälfte von Width von Device
         // print(minSize);
       
-      var angleArray = self.viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: Array Loop implementeren
+      var angleArray = self.viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: mit indexOfClock ersetzen
       let animation = Animation.linear(duration: 0.01)
     
         VStack { // To put in text
@@ -95,7 +99,7 @@ struct ClockView : View {
             }
             
             //Spacer()
-            //Text("Zurich") // TODO: how to get text from viewModel?
+            //Text(viewModel.clocks[0].timeZone) // TODO: mit Clock ersetzen, die von View reingekommen ist und getCity(clock) in ViewModel aufrufen
                 .font(Font.system(size: fontSize(for: size)))
                 //.frame(width: size.width, height: size.height/8, alignment: .bottom)
                 // TODO: wieso ist frame so klein, obwohl ClockView-Child so viel Platz hätte? (siehe View)

@@ -18,6 +18,7 @@ struct WorldClockAppView: View {
         Pseudo-Code
         Foreach timezone-name/city in ViewModel
         create a ClockView with city in Parameter
+        ! pass index of clocks[] from View to ClockView
         ???
         
         Array of clocks (Array wird in ViewModel erstellt. Clocks sind aus Model) mit ClockView aufrufen...
@@ -33,8 +34,8 @@ struct WorldClockAppView: View {
            .navigationTitle("World Clock App")
        }
         */
-       
-       ClockView(viewModel: viewModel)
+    
+       ClockView(viewModel: viewModel) // TODO: indexOfClock mitgeben
        
                //.aspectRatio(1, contentMode: .fit)
                //.frame(width: screenSize.width, height: screenSize.height-50)

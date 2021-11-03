@@ -21,7 +21,6 @@ class WorldClockAppViewModel: ObservableObject {
     }
     
     static func createModel() -> WorldClockAppModel {
-        // TODO: list cities in array oder so
         let cities: Array<String> = ["Europe/Zurich", "Europe/London"]
         return WorldClockAppModel(numberOfClocks: cities.count, clockContentFactory: {
             index in
@@ -32,6 +31,12 @@ class WorldClockAppViewModel: ObservableObject {
     var clocks : [WorldClockAppModel.Clock] {
         model.clocks
     }
+    
+    // TODO: get timeZone per clock and cut out and return city
+    //func getCity(Clock clock) -> String {
+        // return TimeZone(city only) of received clock
+        //return "Zürich";
+    //}
     
     func getAngles(currentClock : WorldClockAppModel.Clock) -> Array<Double> {
         
