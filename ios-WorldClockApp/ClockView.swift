@@ -32,14 +32,14 @@ struct ClockView : View {
      GeometryReader { geometry in
     
       let size = geometry.size // TODO: size replace
-      // TODO: refacoring
-      let minSize = min(geometry.size.width, geometry.size.height)/2-10 // .frame(width: screenSize.width, height: screenSize.height-50)
+      // TODO: iPad: Skalierbarkeit
+         let minSize = min(size.width, size.height)/2-min(size.width, size.height)/20 // .frame(width: screenSize.width, height: screenSize.height-50)
      // minSize: radius: Hälfte von Width von Device
+        // print(minSize);
       
       var angleArray = self.viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: Array Loop implementeren
       let animation = Animation.linear(duration: 0.01)
     
-    // TODO: Skalierbarkeit: einzelne Werte mit GeometryReader (for: size)?
         VStack { // To put in text
             ZStack {
                 ForEach(0..<4) { tick in
@@ -47,8 +47,8 @@ struct ClockView : View {
                         // quarter hour
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 6, height: 25) // TODO: frame // width: 6, height: 25)
-                            .offset(y: minSize-12) // TODO: richtige Sizes 25 länge von tick, durch 2 und noch ein bisschen mehr
+                            .frame(width: minSize/20, height: minSize/6)
+                            .offset(y: minSize-minSize/12) // iPad: -20, iPhone: minSize-minSize/10 TODO: richtige Sizes 25 länge von tick, durch 2 und noch ein bisschen mehr
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/4*360))
                 }
@@ -57,8 +57,9 @@ struct ClockView : View {
                         // each hour
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 5, height: 20) // (width: 5, height: 20)
-                            .offset(y: minSize-10)
+                            .frame(width: minSize/30, height: minSize/10) // (width: 5, height: 20)
+                            .offset(y: minSize-9)
+                        //Spacer()
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/12*360))
                 }
@@ -66,23 +67,23 @@ struct ClockView : View {
                     VStack {
                         Rectangle()
                             .fill(Color.primary)
-                            .frame(width: 2, height: 15) // width: 2, height: 15)
+                            .frame(width: minSize/60, height: minSize/12) // width: 2, height: 15)
                             .offset(y: minSize-8)
                     }
                     .rotationEffect(Angle.degrees(Double(tick)/60*360))
                 }
                 Color.clear
                 
-                Hand(length: minSize*1.4) // HourHand TODO: check
-                    .stroke(Color.primary, lineWidth: 6) // TODO: lineWidths
+                Hand(length: minSize*1.6) // HourHand TODO: check
+                    .stroke(Color.primary, lineWidth: minSize/20) // TODO: lineWidths
                     .rotationEffect(Angle.degrees(angleArray[0]))
                 
-                Hand(length: minSize*1.2) // MinuteHand
-                    .stroke(Color.primary, lineWidth: 3)
+                Hand(length: minSize*1.4) // MinuteHand
+                    .stroke(Color.primary, lineWidth: minSize/50)
                     .rotationEffect(Angle.degrees(angleArray[1]))
                 
-                Hand(length: minSize*1.2) // SecondHand
-                    .stroke(Color.red, lineWidth: 2)
+                Hand(length: minSize*1.4) // SecondHand
+                    .stroke(Color.red, lineWidth: minSize/60)
                     .rotationEffect(Angle.degrees(angleArray[2]))
                     
             }// Zstack end
@@ -103,7 +104,7 @@ struct ClockView : View {
               //.aspectRatio(1, contentMode: .fit)
               //.frame(width: screenSize.width, height: screenSize.height-50)
               
-  } // end body
+    } // end body
 } // end Clockview
 
 
