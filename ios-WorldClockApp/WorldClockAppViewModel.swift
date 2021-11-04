@@ -1,27 +1,29 @@
-//
-//  WorldClockAppViewModel.swift
-//  ios-WorldClockApp
-//
-//  Created by Katrin Stutz on 03.10.21.
-//
-
 import Foundation
 import SwiftUI
 
 class WorldClockAppViewModel: ObservableObject {
     
-    // TODO: get timeZone from a... list, array, enum?
-    
     @Published private var model : WorldClockAppModel
-    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     init(){
         model = WorldClockAppViewModel.createModel()
     }
     
-    static func createModel() -> WorldClockAppModel {
-        let cities: Array<String> = ["Europe/Zurich", "Europe/Moscow"]
+    static func createModel() -> WorldClockAppModel { // TODO: fill with 12 different time zones (for each time zone one)
+        let cities: Array<String> = [
+            "Europe/Zurich",
+            "Europe/Moscow",
+            "America/Los_Angeles",
+            "America/Miquelon",
+            "America/Port-au-Prince",
+            "Atlantic/Bermuda",
+            "Asia/Dubai",
+            "Asia/Jerusalem",
+            "Asia/Pyongyang",
+            "Asia/Singapore",
+            "Australia/Eucla",
+            "Pacific/Fiji"] // MARK: what to do when Timezone isn't found? maybe bonus?
         return WorldClockAppModel(numberOfClocks: cities.count, clockContentFactory: {
             index in
             return cities[index]
@@ -32,36 +34,21 @@ class WorldClockAppViewModel: ObservableObject {
         model.clocks
     }
     
-    // TODO: get timeZone per clock and cut out and return city
-    func getCity(indexOfClock: Int) -> String {
-        let timeZone = clocks[indexOfClock].timeZone
-        let snippet = timeZone
-        var citySubstring: Substring
-        var cityString = ""
-        if let range = snippet.range(of: "/") {
-            citySubstring = snippet[range.upperBound...]
-            print(citySubstring)
-            cityString = String(citySubstring)
+    func getCity(currentClock: WorldClockAppModel.Clock) -> String {
+        let timeZone = currentClock.timeZone
+        var cityString: String = ""
+        if let range = timeZone.range(of: "/") {
+            let citySubstring : Substring = timeZone[range.upperBound...]
+            cityString = String(citySubstring).replacingOccurrences(of: "_", with: " ") // MARK: replaces _ (Los_Angeles) with Space
         }
-        
         return cityString
-        //let realString = String(substring)
-        //return (clocks[indexOfClock].timeZone).split(separator: /)
-        // return TimeZone(city only) of received clock
-        //return "Zürich";
     }
     
-    //let snippet = "1111 West Main Street Beverly Hills, CA 90210 Phone: 123.456.7891"
-    //if let range = snippet.range(of: "Phone: ") {
-    //    let phone = snippet[range.upperBound...]
-     //   print(phone) // prints "123.456.7891"
-    //}
-    
-    func getAngles(currentClock : WorldClockAppModel.Clock) -> Array<Double> {
+    func getAngles(indexOfClock : Int) -> Array<Double> {
         
-        let currentHour = Double(currentClock.currentTime.hour)
-        let currentMinute = Double(currentClock.currentTime.minute)
-        let currentSecond = Double(currentClock.currentTime.second)
+        let currentHour = Double(clocks[indexOfClock].currentTime.hour)
+        let currentMinute = Double(clocks[indexOfClock].currentTime.minute)
+        let currentSecond = Double(clocks[indexOfClock].currentTime.second)
         
         var output : Array<Double> = Array()
         
@@ -89,5 +76,4 @@ class WorldClockAppViewModel: ObservableObject {
         
         return output
     }
-    
 }
