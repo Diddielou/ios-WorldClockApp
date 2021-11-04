@@ -21,7 +21,7 @@ class WorldClockAppViewModel: ObservableObject {
     }
     
     static func createModel() -> WorldClockAppModel {
-        let cities: Array<String> = ["Europe/Zurich", "Europe/London"]
+        let cities: Array<String> = ["Europe/Zurich", "Europe/Moscow"]
         return WorldClockAppModel(numberOfClocks: cities.count, clockContentFactory: {
             index in
             return cities[index]
@@ -33,9 +33,28 @@ class WorldClockAppViewModel: ObservableObject {
     }
     
     // TODO: get timeZone per clock and cut out and return city
-    //func getCity(Clock clock) -> String {
+    func getCity(indexOfClock: Int) -> String {
+        let timeZone = clocks[indexOfClock].timeZone
+        let snippet = timeZone
+        var citySubstring: Substring
+        var cityString = ""
+        if let range = snippet.range(of: "/") {
+            citySubstring = snippet[range.upperBound...]
+            print(citySubstring)
+            cityString = String(citySubstring)
+        }
+        
+        return cityString
+        //let realString = String(substring)
+        //return (clocks[indexOfClock].timeZone).split(separator: /)
         // return TimeZone(city only) of received clock
         //return "Zürich";
+    }
+    
+    //let snippet = "1111 West Main Street Beverly Hills, CA 90210 Phone: 123.456.7891"
+    //if let range = snippet.range(of: "Phone: ") {
+    //    let phone = snippet[range.upperBound...]
+     //   print(phone) // prints "123.456.7891"
     //}
     
     func getAngles(currentClock : WorldClockAppModel.Clock) -> Array<Double> {

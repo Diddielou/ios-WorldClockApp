@@ -22,10 +22,11 @@ struct ClockView : View {
     
     let screenSize: CGRect = UIScreen.main.bounds
     @State var viewModel: WorldClockAppViewModel
-    //var indexOfClock: Int
+    var indexOfClock: Int
     
-    init(viewModel : WorldClockAppViewModel){ // TODO: indexOfClock kommt rein und setzen
+    init(viewModel : WorldClockAppViewModel, indexOfClock: Int){ // TODO: indexOfClock kommt rein und setzen
         self.viewModel = viewModel
+        self.indexOfClock = indexOfClock
     }
     
     
@@ -44,7 +45,7 @@ struct ClockView : View {
       var angleArray = self.viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: mit indexOfClock ersetzen
       let animation = Animation.linear(duration: 0.01)
     
-        VStack { // To put in text
+        HStack {
             ZStack {
                 ForEach(0..<4) { tick in
                     VStack {
@@ -94,13 +95,12 @@ struct ClockView : View {
             .onReceive(viewModel.timer) { (_) in
                     viewModel = WorldClockAppViewModel()
                     withAnimation(animation){
-                        angleArray = viewModel.getAngles(currentClock: viewModel.clocks[0]) // TODO: Automatize
+                        angleArray = viewModel.getAngles(currentClock: viewModel.clocks[indexOfClock]) // TODO: Automatize
                     }
             }
             
             //Spacer()
-            //Text(viewModel.clocks[0].timeZone) // TODO: mit Clock ersetzen, die von View reingekommen ist und getCity(clock) in ViewModel aufrufen
-                .font(Font.system(size: fontSize(for: size)))
+            
                 //.frame(width: size.width, height: size.height/8, alignment: .bottom)
                 // TODO: wieso ist frame so klein, obwohl ClockView-Child so viel Platz hätte? (siehe View)
         } // end VStack
@@ -111,11 +111,6 @@ struct ClockView : View {
     } // end body
 } // end Clockview
 
-
-
-private func fontSize(for size: CGSize)->CGFloat{
-    min(size.width, size.height) / 10
-}
 
 /** Anfang von allen Zeigern muss realtiv zu Clockface positioniert werden, damit alle Zeiger im Zentrum von Clockface starten. **/
 extension CGRect {
