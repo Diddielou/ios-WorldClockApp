@@ -15,7 +15,7 @@ struct WorldClockAppView: View {
                 ForEach (viewModel.clocks){ clock in
                     NavigationLink(destination: createDetailView(currentClock: clock)) {
                         HStack {
-                            ClockView(viewModel: WorldClockAppViewModel(), currentClock: clock)
+                            ClockView(viewModel: viewModel, currentClock: clock)
                                 .frame(width: 125, height: 125)
                             Spacer()
                             Text(viewModel.getCity(currentClock: clock))
@@ -33,31 +33,36 @@ struct WorldClockAppView: View {
             
             if UIDevice.current.orientation.isLandscape {
                 HStack {
-                    Spacer()
-                    ClockView(viewModel: viewModel, currentClock: currentClock)
-                        .frame(width: minSize, height: minSize)
-                    Spacer()
-                    Text(viewModel.getCity(currentClock: currentClock))
-                        .font(Font.system(size: fontSize(for: size)))
-                    Spacer()
+                    getStack(viewModel: viewModel, currentClock: currentClock, size: size, minSize: minSize)
                 }
-            } else { // TODO: else if? wegen Z-achse
+            } else {
                 VStack {
-                    Spacer()
-                    ClockView(viewModel: viewModel, currentClock: currentClock)
-                        .frame(width: minSize, height: minSize)
-                    Spacer()
-                    Text(viewModel.getCity(currentClock: currentClock))
-                        .font(Font.system(size: fontSize(for: size)))
-                    Spacer()
+                    getStack(viewModel: viewModel, currentClock: currentClock, size: size, minSize: minSize)
                 }
             }
         }
     }
     
-    private func fontSize(for size: CGSize) -> CGFloat{
+    func getStack(
+        viewModel: WorldClockAppViewModel,
+        currentClock: WorldClockAppModel.Clock,
+        size: CGSize,
+        minSize: CGFloat) -> some View {
+        Group {
+            Spacer()
+            ClockView(viewModel: viewModel, currentClock: currentClock)
+                .frame(width: minSize, height: minSize)
+            Spacer()
+            Text(viewModel.getCity(currentClock: currentClock))
+                .font(Font.system(size: fontSize(for: size)))
+            Spacer()
+        }
+    }
+    
+    func fontSize(for size: CGSize) -> CGFloat{
         min(size.width, size.height) / 10
     }
+
 }
 
 struct ContentView_Previews: PreviewProvider {

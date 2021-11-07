@@ -56,16 +56,16 @@ struct ClockView : View {
                         .rotationEffect(Angle.degrees(Double(tick)/60*360))
                     }
                     Hand(length: minSize/1.75) // HourHand
-                        .stroke(Color.primary, lineWidth: minSize*0.045)
-                        .rotationEffect(Angle.degrees(angleArray[0]+180))
+                        .stroke(Color.primary, lineWidth: minSize*0.05)
+                        .rotationEffect(Angle.degrees(angleArray[0]))
                     
                     Hand(length: minSize-minSize/7) // MinuteHand
-                        .stroke(Color.primary, lineWidth: minSize*0.02)
-                        .rotationEffect(Angle.degrees(angleArray[1]+180))
+                        .stroke(Color.primary, lineWidth: minSize*0.03)
+                        .rotationEffect(Angle.degrees(angleArray[1]))
                     
                     Hand(length: minSize-minSize/7) // SecondHand
                         .stroke(Color.red, lineWidth: minSize*0.015)
-                        .rotationEffect(Angle.degrees(angleArray[2]+180))
+                        .rotationEffect(Angle.degrees(angleArray[2]))
                     
                     Circle()
                         .fill(.red)
@@ -112,6 +112,8 @@ struct Hand: Shape {
 
 struct ClockView_Previews: PreviewProvider {
     static var previews: some View {
-        WorldClockAppView(viewModel: WorldClockAppViewModel())
+        Group {
+            WorldClockAppView(viewModel: WorldClockAppViewModel())
+        }
     }
 }

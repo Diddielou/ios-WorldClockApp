@@ -10,7 +10,7 @@ class WorldClockAppViewModel: ObservableObject {
         model = WorldClockAppViewModel.createModel()
     }
     
-    static func createModel() -> WorldClockAppModel { // TODO: fill with 12 different time zones (for each time zone one)
+    static func createModel() -> WorldClockAppModel {
         let cities: Array<String> = [
             "Europe/Zurich",
             "Europe/Moscow",
@@ -23,7 +23,7 @@ class WorldClockAppViewModel: ObservableObject {
             "Asia/Pyongyang",
             "Asia/Singapore",
             "Australia/Eucla",
-            "Pacific/Fiji"] // MARK: what to do when Timezone isn't found? maybe bonus?
+            "Pacific/Fiji"]
         return WorldClockAppModel(numberOfClocks: cities.count, clockContentFactory: {
             index in
             return cities[index]
@@ -39,7 +39,7 @@ class WorldClockAppViewModel: ObservableObject {
         var cityString: String = ""
         if let range = timeZone.range(of: "/") {
             let citySubstring : Substring = timeZone[range.upperBound...]
-            cityString = String(citySubstring).replacingOccurrences(of: "_", with: " ") // MARK: replaces _ (Los_Angeles) with Space
+            cityString = String(citySubstring).replacingOccurrences(of: "_", with: " ")
         }
         return cityString
     }
@@ -52,7 +52,6 @@ class WorldClockAppViewModel: ObservableObject {
         
         var output : Array<Double> = Array()
         
-        // TODO: fractionalHour is not perfect
         let fractionalHour = (currentHour.truncatingRemainder(dividingBy: 12)) + currentMinute / 60 + currentSecond / 3600
         let fractionalMinute = currentMinute + currentSecond / 60
         let fractionalSecond = currentSecond
@@ -66,9 +65,9 @@ class WorldClockAppViewModel: ObservableObject {
         let minuteDegrees = 360.0 / 60.0
         let secondDegrees = 360.0 / 60.0
         
-        angleHour = hourDegrees * fractionalHour
-        angleMinute = minuteDegrees * fractionalMinute
-        angleSecond =  secondDegrees * fractionalSecond
+        angleHour = hourDegrees * fractionalHour + 180
+        angleMinute = minuteDegrees * fractionalMinute + 180
+        angleSecond =  secondDegrees * fractionalSecond + 180
         
         output.insert(angleHour, at: 0)
         output.insert(angleMinute, at: 1)
