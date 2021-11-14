@@ -44,7 +44,7 @@ class WorldClockAppViewModel: ObservableObject {
         return cityString
     }
     
-    // inspired by forgotten source
+    // inspired by https://medium.com/swlh/a-clock-using-swift-and-sprite-kit-27f3fffc878a
     func getAngles(indexOfClock : Int) -> Array<Double> {
         
         let currentHour = Double(clocks[indexOfClock].currentTime.hour)
