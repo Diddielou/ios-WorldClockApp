@@ -28,7 +28,6 @@ struct WorldClockAppModel {
         for index in 0..<numberOfClocks {
             let timeZone = clockContentFactory(index)
             let time = Time(timeZoneName: timeZone)
-            print(time)
             clocks.append(Clock(id: index, timeZone: timeZone, currentTime: time))
         }
     }
@@ -41,7 +40,6 @@ struct WorldClockAppModel {
 }
 
 /*
- [ TODO: delete comment
  "Africa/Abidjan",
  "Africa/Accra",
  "Africa/Addis_Ababa",
@@ -207,8 +205,8 @@ struct WorldClockAppModel {
  "America/Panama",
  "America/Pangnirtung",
  "America/Paramaribo",
- "America/Phoenix", // TODO: x
- "America/Port-au-Prince", // TODO: x
+ "America/Phoenix",
+ "America/Port-au-Prince",
  "America/Port_of_Spain",
  "America/Porto_Velho",
  "America/Puerto_Rico",
@@ -328,7 +326,7 @@ struct WorldClockAppModel {
  "Asia/Samarkand",
  "Asia/Seoul",
  "Asia/Shanghai",
- "Asia/Singapore", // TODO: x
+ "Asia/Singapore",
  "Asia/Srednekolymsk",
  "Asia/Taipei",
  "Asia/Tashkent",
@@ -347,7 +345,7 @@ struct WorldClockAppModel {
  "Asia/Yekaterinburg",
  "Asia/Yerevan",
  "Atlantic/Azores",
- "Atlantic/Bermuda", // TODO: x
+ "Atlantic/Bermuda",
  "Atlantic/Canary",
  "Atlantic/Cape_Verde",
  "Atlantic/Faroe",
@@ -372,7 +370,7 @@ struct WorldClockAppModel {
  "Europe/Andorra",
  "Europe/Astrakhan",
  "Europe/Athens",
- "Europe/Belgrade", // TODO: x
+ "Europe/Belgrade",
  "Europe/Berlin",
  "Europe/Bratislava",
  "Europe/Brussels",
@@ -449,7 +447,7 @@ struct WorldClockAppModel {
  "Pacific/Efate",
  "Pacific/Enderbury",
  "Pacific/Fakaofo",
- "Pacific/Fiji", // TODO: x
+ "Pacific/Fiji",
  "Pacific/Funafuti",
  "Pacific/Galapagos",
  "Pacific/Gambier",
@@ -467,7 +465,7 @@ struct WorldClockAppModel {
  "Pacific/Niue",
  "Pacific/Norfolk",
  "Pacific/Noumea",
- "Pacific/Pago_Pago", // TODO: x
+ "Pacific/Pago_Pago",
  "Pacific/Palau",
  "Pacific/Pitcairn",
  "Pacific/Pohnpei",

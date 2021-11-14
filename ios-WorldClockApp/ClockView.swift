@@ -23,6 +23,7 @@ struct ClockView : View {
             var angleArray = self.viewModel.getAngles(indexOfClock: currentClock.id)
             let animation = Animation.linear(duration: 0.01)
             
+            // inspired by https://talk.objc.io/episodes/S01E192-analog-clock
             HStack {
                 ZStack {
                     ForEach(0..<4) { tick in
@@ -31,7 +32,7 @@ struct ClockView : View {
                             Rectangle()
                                 .fill(Color.primary)
                                 .frame(width: minSize/23, height: minSize/7)
-                                .offset(y: minSize-minSize/14) // MARK: doppeltes von oben
+                                .offset(y: minSize-minSize/14) // MARK: offset abhängig von height ab: doppeltes von height/_
                         }
                         .rotationEffect(Angle.degrees(Double(tick)/4*360))
                     }
@@ -41,7 +42,7 @@ struct ClockView : View {
                             Rectangle()
                                 .fill(Color.primary)
                                 .frame(width: minSize/30, height: minSize/10)
-                                .offset(y: minSize-minSize/20) // MARK: doppeltes von oben
+                                .offset(y: minSize-minSize/20)
                         }
                         .rotationEffect(Angle.degrees(Double(tick)/12*360))
                     }
@@ -50,8 +51,8 @@ struct ClockView : View {
                             // each second
                             Rectangle()
                                 .fill(Color.primary)
-                                .frame(width: minSize/80, height: minSize/12) // offset abhängig von height
-                                .offset(y: minSize-minSize/24) // MARK: doppeltes von oben
+                                .frame(width: minSize/80, height: minSize/12)
+                                .offset(y: minSize-minSize/24)
                         }
                         .rotationEffect(Angle.degrees(Double(tick)/60*360))
                     }
@@ -71,6 +72,7 @@ struct ClockView : View {
                         .fill(.red)
                         .frame(width: minSize*0.08, height: minSize*0.08)
                 }
+                // inspired by https://github.com/tmusabe/ClockApp/blob/main/ClockApp/ClockApp/View/TimeWatchView.swift
                 .onReceive(viewModel.timer) { (_) in
                     viewModel = WorldClockAppViewModel()
                     withAnimation(animation){
@@ -103,7 +105,6 @@ struct Hand: Shape {
     func path(in rect: CGRect) -> Path { // single hand
         let circleRadius: CGFloat = length*0.025
         return Path { p in
-            // MARK: Tippfehler bei move: y: rect.midY
             p.move(to: CGPoint(x: rect.midX, y: rect.midY+length))
             p.addLine(to: CGPoint(x: rect.midX, y: rect.midY - circleRadius))
         }
